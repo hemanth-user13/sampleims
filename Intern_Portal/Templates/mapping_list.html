@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Mapping List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffe0d2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #e74c3c;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffe0d2;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0 auto;
+            color: black;
+            background-color: #ffe0d2;
+            border-radius: 15px;
+            height: 50px;
+            width: 660px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #dcdcdc;
+            margin-top: 20px;
+            animation: fade-in 1s ease-out;
+        }
+
+        td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dcdcdc;
+            transition: background-color 0.3s;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        th {
+            font-weight: bold;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            text-align: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #dcdcdc;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .count-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animation */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student-Faculty Mapping List</h1>
+    </header>
+
+    <!-- Count container with neat styling -->
+    <div class="main-container">
+        <div class="container count-container">
+            <p>Total students: <span id="uniqueStudentCount">0</span></p>
+        </div>
+
+
+        <!-- Back button on the right side -->
+        <div>
+            <a href="#" onclick="history.back();">
+                <img src="https://www.freeiconspng.com/thumbs/return-button-png/return-button-png-31.png" alt="Back" style="width: 80px; height: 80px;">
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Registration Number</th>
+                    <th>Student Name</th>
+                    <th>Faculty Name</th>
+                    <th>Student Email</th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through your data and populate the table rows -->
+                {% for mapping in mappings %}
+                <tr>
+                    <td><a href="{% url 'hod_activities' roll_number=mapping.student_registration_number %}">{{mapping.student_registration_number}}</a></td>
+                    <td>{{ mapping.student_name }}</td>
+                    <td>{{ mapping.faculty_name }}</td>
+                    <td><a href="mailto:{{ mapping.student_email }}">{{ mapping.student_email }}</a></td>
+                    <!-- Populate more columns as needed -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uniqueStudents = {};
+            const uniqueFaculties = {};
+
+            // Loop through table rows and count unique names
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                const studentName = row.querySelector('td:first-child').textContent;
+                const facultyName = row.querySelector('td:nth-child(2)').textContent;
+
+                uniqueStudents[studentName] = true;
+                uniqueFaculties[facultyName] = true;
+            });
+
+            // Update the counts in the HTML
+            const uniqueStudentCount = Object.keys(uniqueStudents).length;
+            const uniqueFacultyCount = Object.keys(uniqueFaculties).length;
+
+            document.getElementById('uniqueStudentCount').textContent = uniqueStudentCount;
+            document.getElementById('uniqueFacultyCount').textContent = uniqueFacultyCount;
+        });
+    </script>
+</body>
+</html>

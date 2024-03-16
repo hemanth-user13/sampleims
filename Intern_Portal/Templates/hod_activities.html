@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HOD Activities</title>
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #ffe0d2;
+            color: black;
+            padding: 20px;
+            margin: 0;
+            border-radius: 50px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            background-color: #ffe0d2;
+            border: 1px solid #ddd;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 600px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        fieldset {
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        strong {
+            font-weight: bold;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .file-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .file-item {
+            flex: 0 0 calc(25% - 10px);
+            margin-right: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+        }
+
+        /* Apply fade-in animation to the table */
+        table {
+            opacity: 0;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+                        background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            color: black;
+        }
+
+        td {
+            background-color: #f2f2f2;
+        }
+
+        .marks-input {
+            width: 80px;
+            text-align: center;
+        }
+
+        .average-input {
+            width: 100px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Apply fade-in animation to the table */
+        table.fade-in {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>HOD Activities</h1>
+
+    <ul>
+        {% for file in files %}
+        <li>
+            <fieldset>
+                <legend style="color: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);">Roll Number: {{ file.roll_number }}</legend>
+
+                <div class="file-info">
+                    <div class="file-item">
+                        <strong>Weekly Report:</strong>
+                        <a href="{{ file.weekly_report.url }}" target="_blank">View</a>
+                    </div>
+                    {% if file.certificate %}
+                    <div class="file-item">
+                        <strong>Certificate:</strong>
+                        <a href="{{ file.certificate.url }}" target="_blank">View</a>
+                    </div>
+                    {% endif %}
+                    {% if file.ppt %}
+                    <div class="file-item">
+                        <strong>PPT:</strong>
+                        <a href="{{ file.ppt.url }}" target="_blank">View</a>
+                    </div>
+                    {% endif %}
+                    {% if file.final_project_report %}
+                    <div class="file-item">
+                        <strong>Final Project Report:</strong>
+                        <a href="{{ file.final_project_report.url }}" target="_blank">View</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="marks-section">
+                <form method="post" action="{% url 'update_marks' file.id %}">
+                    {% csrf_token %}
+                    {% if not file.duplicate %}
+                    <!-- Add the "fade-in" class to the table to apply the animation -->
+                    <table class="fade-in">
+                        <tr>
+                            <th>Weeks</th>
+                            <th>Marks</th>
+                        </tr>
+                        <tr>
+                            <td>Week 1</td>
+                            <td><input type="number" name="marks1" class="marks-input" value="{{ file.marks1 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 2</td>
+                            <td><input type="number" name="marks2" class="marks-input" value="{{ file.marks2 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 3</td>
+                            <td><input type="number" name="marks3" class="marks-input" value="{{ file.marks3 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 4</td>
+                            <td><input type="number" name="marks4" class="marks-input" value="{{ file.marks4 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 5</td>
+                            <td><input type="number" name="marks5" class="marks-input" value="{{ file.marks5 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 6</td>
+                            <td><input type="number" name="marks6" class="marks-input" value="{{ file.marks6 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 7</td>
+                            <td><input type="number" name="marks7" class="marks-input" value="{{ file.marks7 }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Week 8</td>
+                            <td><input type="number" name="marks8" class="marks-input" value="{{ file.marks8 }}" readonly></td>
+                        </tr>
+                        <!-- Repeat for other review rows -->
+                    </table>
+                    {% endif %}
+                </form>
+                <strong>Average Marks:</strong>
+                <input type="number" name="average" class="average-input"   readonly>
+            </div>
+        </li>
+        {% empty %}
+        <p>No files uploaded by this student.</p>
+        {% endfor %}
+    </ul>
+</body>
+<script>
+    var marksInputs = document.querySelectorAll('.marks-input');
+    var averageInput = document.querySelector('.average-input');
+
+    marksInputs.forEach(function(input) {
+        input.addEventListener('input', calculateAverage);
+    });
+
+    function calculateAverage() {
+        var totalMarks = 0;
+        marksInputs.forEach(function(input) {
+            totalMarks += parseInt(input.value || 0);
+        });
+        var average = totalMarks / marksInputs.length;
+        averageInput.value = average.toFixed(2);
+    }
+
+    // Initially calculate the average when the page loads
+    calculateAverage();
+</script>
+</html>

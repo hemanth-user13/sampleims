@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Uploaded Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+        }
+
+        legend {
+            font-weight: bold;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            text-align: center;
+            color: #777;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+        }
+
+        .submit-button {
+            text-align: center;
+        }
+
+        .submit-button button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .submit-button button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Animation classes */
+        .animated {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        .slide-in {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .slide-out {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uploaded Files</h1>
+
+    <ul>
+        {% for file in files %}
+        <li class="animated slide-out">
+            <fieldset>
+                <legend>File Details - Roll Number: {{ file.roll_number }}</legend>
+                <strong>Weekly Report:</strong> <a href="{{ file.weekly_report.url }}" target="_blank">View</a><br>
+                <strong>Certificate:</strong> <a href="{{ file.certificate.url }}" target="_blank">View</a><br>
+                <strong>PPT:</strong> <a href="{{ file.ppt.url }}" target="_blank">View</a><br>
+                <strong>Final Project Report:</strong> <a href="{{ file.final_project_report.url }}" target="_blank">View</a><br>
+                <label for="marks">Marks:</label>
+                <input type="number" id="marks" name="marks" min="0" max="100">
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </li>
+        {% empty %}
+        <p>No files uploaded yet.</p>
+        {% endfor %}
+    </ul>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var listItems = document.querySelectorAll("li.animated");
+
+        listItems.forEach(function(item, index) {
+            setTimeout(function() {
+                item.classList.remove("slide-out");
+                item.classList.add("slide-in");
+            }, index * 200);
+        });
+    });
+</script>
+</html>

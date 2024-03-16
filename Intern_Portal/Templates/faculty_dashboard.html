@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Faculty Dashboard | GITAM</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS for Orange Color Shades and Animations -->
+    <style>
+        /* Define orange color shades using CSS variables */
+        :root {
+            --main-orange: #1d6eb5;
+            --light-orange: #ffd700; /* Lighter orange shade */
+            --dark-orange: #ff8c00; /* Darker orange shade */
+        }
+
+        /* Update the custom-navbar background color with the main orange color */
+        .custom-navbar {
+            background-color: var(--main-orange);
+        }
+
+        /* Update text colors for contrast */
+        .custom-navbar .navbar-brand,
+        .custom-navbar .navbar-nav .nav-link {
+            color: #fff; /* White text color for contrast */
+        }
+
+        /* Additional CSS styling for animations */
+        #welcome-text {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        /* Add hover effect for activity button */
+        .activity-button:hover {
+            background-color: var(--dark-orange);
+        }
+
+        /* Style the table for better readability */
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        /* Add striped rows to the table */
+        .table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        /* Add hover effect for table rows */
+        .table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            height: 100%;
+            width: 250px;
+            background-color: rgba(213, 224, 230, 0.8); /* Updated sidebar background color with transparency */
+            transition: right 0.5s; /* Only need to animate right property */
+            z-index: 1000;
+            box-shadow: -10px 0 20px rgba(0, 0, 0, 0.1); /* Add box shadow for a professional look */
+            overflow-y: auto; /* Add scroll bar when content exceeds height */
+            padding-top: 50px;
+            color: #000; /* Black color font */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            color: #000; /* Black color font */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border bottom for separation */
+        }
+
+        .sidebar ul li:last-child {
+            border-bottom: none; /* Remove border bottom for last item */
+        }
+
+        .sidebar ul li a {
+            text-decoration: none; /* Remove underline from sidebar links */
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .sidebar-toggle span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #333; /* Toggle button color */
+            margin-bottom: 5px;
+            transition: 0.3s; /* Add smooth transition */
+        }
+
+        .sidebar-toggle:hover span {
+            background-color: #ff6b58; /* Toggle button hover color */
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar with Custom Color -->
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">Faculty Dashboard</a>
+        <!-- Activity Button with Dropdown -->
+        <div class="ml-auto">
+            <div class="btn-group">
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn btn-primary dropdown-toggle activity-button"-->
+<!--                        data-toggle="dropdown"-->
+<!--                >-->
+<!--                    Activity-->
+<!--                </button>-->
+<!--                <div class="dropdown-menu dropdown-menu-right">-->
+<!--                    <a class="dropdown-item" href="{% url 'faculty_files_view' %}">View Upload Files</a>-->
+<!--                    <a class="dropdown-item" href="#">Chat</a>-->
+<!--                    <a class="dropdown-item" href="#">Group Chat</a>-->
+<!--                </div>-->
+                &nbsp;&nbsp;
+                <button class="btn btn-danger">
+                    <a href="{% url 'main_dashboard' %}">Log Out</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Sidebar Toggle Button -->
+<div class="sidebar-toggle" onclick="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <ul style="color: #000;">
+        <!-- Activity Dropdown Content -->
+        <li><a class="dropdown-item" href="{% url 'faculty_files_view' %}">View Upload Files</a></li>
+        <li><a class="dropdown-item" href="#">Chat</a></li>
+        <li><a class="dropdown-item" href="#">Group Chat</a></li>
+    </ul>
+</div>
+
+<!-- Content container -->
+<div class="container mt-4">
+    <!-- Animated Welcome Message -->
+    <h3 style="color: black; text-align:; font-weight: bold;">Welcome Back {{ faculty_name }} 👋</h3>
+    <!-- Table -->
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Student Registration Number</th>
+                <th>Student Name</th>
+                <th>Student Branch</th>
+                <th>Student Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mapping in faculty_mappings %}
+            <tr>
+                <td>
+                    <a href="{% url 'faculty_activities' roll_number=mapping.student_registration_number %}">
+                        {{ mapping.student_registration_number }}
+                    </a>
+                </td>
+                <td>{{ mapping.student_name }}</td>
+                <td>{{ mapping.student_branch }}</td>
+                <td>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ mapping.student_email }}" target="_blank">
+                        {{ mapping.student_email }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Include GSAP library for animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+<!-- JavaScript animation -->
+<script>
+    // Animate the welcome message
+    gsap.to("#welcome-text", { opacity: 1, y: 0, duration: 0.5, delay: 0.5 });
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        if (sidebar.style.right === "-250px") {
+            sidebar.style.right = "0";
+        } else {
+            sidebar.style.right = "-250px";
+        }
+    }
+
+    // Add animations to sidebar
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById('sidebar');
+        sidebar.classList.add('animate__animated', 'animate__slideInRight');
+    });
+</script>
+</body>
+</html>

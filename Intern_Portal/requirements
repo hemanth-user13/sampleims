@@ -1,0 +1,17 @@
+Django==5.0.1
+openpyxl==3.1.2
+SpeechRecognition==3.10.1
+pyttsx3==2.90
+pandas==2.2.0
+mysqlclient==2.2.4
+
+for testing libaries are:
+cd C:\Users\Goutham Hemanth\OneDrive\Desktop\Major_Project\Mini_Project\Mini_Project\IMS\Intern_Portal_Project
+pip install selenium
+python test_selenium.py
+
+using coverage.py
+pip install coverage
+coverage run test_selenium.py
+coverage report -m
+coverage html

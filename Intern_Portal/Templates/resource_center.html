@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Resource Center</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Your custom CSS styles for the tree structure */
+        .tree-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 75vh;
+            background-color: #f8f9fa; /* Light background color */
+        }
+
+        .org-chart {
+            padding: 20px;
+        }
+
+        .org-chart li {
+            text-align: center;
+            position: relative;
+            padding: 10px;
+            display: inline-block;
+            vertical-align: top;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            background-color: #ffecd9; /* Orange shade for boxes */
+            border-radius: 10px; /* Box border radius */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
+            margin: 10px; /* Margin between boxes */
+            animation: fadeInAnimation 1s ease-in-out; /* Fade in animation */
+        }
+
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .org-chart li::before,
+        .org-chart li::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 1px;
+            border-top: 1px solid #ccc;
+        }
+
+        .org-chart li::before {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .org-chart li::after {
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        .org-chart li a {
+            display: inline-block;
+            text-decoration: none;
+            color: #333; /* Link color */
+            font-family: arial, verdana, tahoma;
+            font-size: 20px; /* Link font size */
+            background: #ffd699; /* Orange shade for links */
+            padding: 10px;
+            border-radius: 5px; /* Box border radius */
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .org-chart li a:hover,
+        .org-chart li a:hover+ul li a {
+            background: #ffb366; /* Darker orange shade on hover */
+            color: #000;
+            border: 1px solid #94a0b4;
+        }
+
+        .org-chart li a:hover+ul li::after,
+        .org-chart li a:hover+ul li::before,
+        .org-chart li a:hover+ul::before,
+        .org-chart li a:hover+ul ul::before {
+            border-color: #808080;
+        }
+
+        /* Custom Styles for Chat Icon */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff4500; /* Orange-Red background color */
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px 0px #000000;
+            transform: rotate(0deg);
+            transition: transform 0.5s;
+        }
+
+        .chat-icon a {
+            font-size: 36px; /* Adjust the font size for the robot emoji */
+        }
+
+        .chat-icon:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1d6eb5;">
+        <a class="navbar-brand" href="#" style="margin: auto;"> RESOURCE CENTER </a>
+    </nav>
+
+
+    <div class="tree-container">
+        <!-- Your tree structure    based on documents and domains -->
+        <div class="org-chart">
+            <ul>
+                <li>
+                    <a href="#">Latest Technologies</a>
+                    <ul class="document-list">
+                        {% for domain, documents in organized_documents.items %}
+                            <li class="domain-color-{{ loop.index }}">
+                                <a href="#">{{ domain }}</a>
+                                <ul>
+                                    {% for document in documents %}
+                                        <li>
+                                            <a href="#" class="document-link"
+                                                data-document-id="{{ document.id }}">{{ document.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Add a form to submit the clicked document link -->
+    <form id="document-form" method="post" style="display: none;">
+        {% csrf_token %}
+        <input type="hidden" id="document-id" name="document_id">
+    </form>
+    <button class="chat-icon" id="chatIcon">
+        <!-- Add your chat icon content (e.g., FontAwesome icon) -->
+        <a href="http://127.0.0.1:8000/voicechat">🤖</a>
+    </button>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // JavaScript to handle the click event on document links
+        document.addEventListener('DOMContentLoaded', function () {
+            const documentLinks = document.querySelectorAll('.document-link');
+
+            documentLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    // Set the document_id in the hidden input field
+                    document.getElementById('document-id').value = link.dataset.documentId;
+
+                    // Submit the form to handle the redirection
+                    document.getElementById('document-form').submit();
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // JavaScript to generate dynamic colors for domains
+        document.addEventListener('DOMContentLoaded', function () {
+            const domainColors = document.querySelectorAll('.org-chart .domain-color');
+
+            domainColors.forEach(function (domain) {
+                // Generate a random color
+                const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                domain.style.backgroundColor = randomColor;
+            });
+        });
+    </script>
+</body>
+
+</html>

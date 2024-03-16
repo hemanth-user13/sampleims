@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Private Files</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light grey background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #4285f4; /* Blue */
+            color: #fff; /* White text */
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        #upload-section,
+        #files-section {
+            width: 100%;
+            background-color: #fff; /* White */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center; /* Align content to center */
+        }
+
+        #upload-section h2 {
+            color: #2E1A78; /* Upload Private Files color #2E1A78 */
+        }
+
+        #upload-section h4,
+        #upload-section label {
+            text-align: left; /* Align text to the left */
+            width: 100%;
+            margin-left: 20px;
+        }
+
+        #upload-section h4 {
+            margin-bottom: 10px; /* Add margin bottom */
+            color: #4F3A35; /* Font color #4F3A35 */
+        }
+
+        #file-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: #ff0000; /* Dark grey text */
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc; /* Light grey border */
+            border-radius: 5px;
+            background-color: #f1f3f4; /* Light grey */
+            color: #4285f4; /* Blue text */
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #update-button {
+            background-color: #0f9d58; /* Green */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #update-button:hover {
+            background-color: #0a7d41; /* Darker green on hover */
+        }
+
+        #files-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #files-list li {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f1f3f4; /* Light grey background for each file entry */
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-actions a {
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .file-actions .view-button {
+            background-color: #db4437; /* Red */
+        }
+
+        .file-actions .download-button {
+            background-color: #ffa700; /* Yellow */
+        }
+
+        #files-section h2 {
+            color: #C74F29; /* Your Uploaded Files color #C74F29 */
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-container">
+        <div id="upload-section">
+            <h2>Upload Private Files</h2>
+            <h4 style="color:#388de8">Welcome {{ email }}</h4>
+            <form id="file-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file">Choose files:</label>
+                <input type="file" name="file" id="file" required multiple>
+                <button id="update-button" type="submit" onclick="animateFormSubmission()">Update Files</button>
+            </form>
+            <p id="success-message" style="display:none; color:green;">Files successfully submitted!</p>
+        </div>
+
+        <div id="files-section">
+            <h2>Your Uploaded Files:</h2>
+            <ul id="files-list">
+                {% for file in files %}
+                    <li>
+                        <span>{{ file.file.name }} - {{ file.uploaded_at }}</span>
+                        <div class="file-actions">
+
+                            <a href="{% url 'download_file' file.id %}" class="download-button">Download</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Your JavaScript animations here
+        function animateFormSubmission() {
+            var animationContainer = document.getElementById('content-container');
+            animationContainer.style.animation = 'fadeOut 1s ease-out';
+            setTimeout(function () {
+                document.forms[0].submit();
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

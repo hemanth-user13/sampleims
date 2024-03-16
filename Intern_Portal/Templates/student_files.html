@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Your Files</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for the Upload Your Files Page */
+        body {
+            font-family: "Arial", sans-serif;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 480px;
+            padding: 20px;
+            background-color: #ffe0d2;
+            border-radius: 15px;
+            box-shadow: 3px 6px 9px rgba(0, 0, 0, 0.1);
+            animation: fade-in 0.5s ease-in-out;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            transition: border-color 0.3s ease-in-out;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .custom-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 3px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .alert p {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* Add Animation */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sign-btn {
+            display: inline-block;
+            width: 100%;
+            height: 43px;
+            background-color: #151111;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+        }
+
+        .sign-btn:hover {
+            background-color: #8371fd;
+        }
+
+        .container h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container .row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-group .custom-file-upload {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-file-upload input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload label {
+            background-color: #ff8c6b; /* Change the background color to orange */
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            text-align: center;
+            min-width: 120px;
+            display: inline-block;
+        }
+
+        .custom-file-upload label:hover {
+            background-color: #ffa07a; /* Change the hover background color to a different shade of orange */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Upload Your Files</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="weekly_report">Upload Weekly Report:</label>
+            <div class="custom-file-upload">
+                <input type="file" name="weekly_report" id="weekly_report" accept=".pdf, .doc, .docx" class="form-control"
+                       required>
+                <label for="weekly_report" class="custom-file-label">Choose File</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="certificate">Certificate:</label>
+            <div class="custom-file-upload">
+                <input type="file" name="certificate" id="certificate" accept=".pdf, .doc, .docx" class="form-control"
+                       required>
+                <label for="certificate" class="custom-file-label">Choose File</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ppt">PPT:</label>
+            <div class="custom-file-upload">
+                <input type="file" name="ppt" id="ppt" accept=".ppt, .pptx" class="form-control" required>
+                <label for="ppt" class="custom-file-label">Choose File</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="final_project_report">Final Project Report:</label>
+            <div class="custom-file-upload">
+                <input type="file" name="final_project_report" id="final_project_report" accept=".pdf, .doc, .docx"
+                       class="form-control" required>
+                <label for="final_project_report" class="custom-file-label">Choose File</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="roll_number">Student Roll No:</label>
+            <input type="number" name="roll_number" id="roll_number" class="form-control" required>
+        </div>
+        <button type="submit" class="sign-btn">Submit</button>
+    </form>
+</div>
+
+<!-- Include Bootstrap and JavaScript libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
+<script>
+    // JavaScript to update the custom file input label
+    document.querySelectorAll('.custom-file-upload input[type="file"]').forEach(input => {
+        const label = input.nextElementSibling;
+        input.addEventListener('change', function() {
+            const fileName = this.value.split('\\').pop(); // Get the file name without path
+            label.textContent = fileName || 'Choose File';
+        });
+    });
+</script>
+</body>
+</html>

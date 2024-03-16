@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+  <title>HOD Dashboard | GITAM</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+    .navbar {
+      background-color: #1d6eb5;
+      height: 50px;
+    }
+    .navbar-brand {
+      color: #fff;
+      font-weight: bold;
+    }
+    .navbar-nav .nav-link {
+      color: #fff;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #e74c3c;
+    }
+    .container {
+      min-height: 100vh;
+    }
+    .box {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+    }
+    .right-content {
+      background-color: #f9f9f9;
+      padding: 45px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #4169e1;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    label {
+      font-weight: bold;
+      color: #3498db;
+    }
+    button[type="submit"] {
+  display: block;
+  width: 80%;
+  height: 43px;
+  background-color: #151111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  margin: 20px auto; /* Centering the button horizontally */
+  transition: 0.3s;
+}
+
+    button[type="submit"]:hover {
+      background-color: #8371fd;
+    }
+    a {
+      color: #e74c3c;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .dropdown-menu {
+      margin-top: 10px;
+    }
+    .logout-button {
+      margin-left: 10px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const box = document.querySelector(".box");
+      box.classList.add("show");
+    });
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">WELCOME TO HOD DASHBOARD</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <button class="btn btn-primary table-button dropdown-toggle" type="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              File Actions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" style="color: black" onclick="window.location.href = '{% url 'mapping_list' %}';">
+                View Mapping List
+              </a>
+              <a class="dropdown-item" href="{% url 'download_student_marks' %}" style="color: black">Download Student Marks</a>
+              <a class="dropdown-item" href="{% url 'hod_marks_view'%}" style="color: black">Show Student Marks</a>
+              <a class="dropdown-item" href="{% url 'student_performance'%}" style="color: black">Student Performance Graphs</a>
+            </div>
+          </li>
+          <li class="nav-item logout-button">
+            <button class="btn btn-danger">
+              <a href="{% url 'main_dashboard' %}" style="color: #fff;">Log Out</a>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <h3 style="color: black">Upload Excel Files</h3>
+          <form method="post" enctype="multipart/form-data" action="{% url 'generate_mapping_excel' %}">
+            {% csrf_token %}
+            <p style="color: #e74c3c; font-size: 14px; margin-top: 10px">
+              Disclaimer: Uploaded Excel files will undergo a meticulous
+              validation process to verify the presence of mandatory fields,
+              ensuring precise and error-free data mapping. We kindly request that
+              you adhere to the provided guidelines and regulations when
+              structuring the data for both students and faculty members.
+            </p>
+            <div class="form-group">
+              <label for="faculty_file" style="color: black">Faculty Excel File:</label>
+              <input type="file" class="form-control" name="faculty_file" accept=".xlsx" />
+            </div>
+            <div class="form-group">
+              <label for="student_file" style="color: black">Student Excel File:</label>
+              <input type="file" class="form-control" name="student_file" accept=".xlsx" />
+            </div>
+            <button type="submit">Generate Mapping</button>
+          </form>
+          <a href="{% url 'download_mapped_excel' %}" class="btn btn-link">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/2203px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png" alt="Excel Logo" width="60px" height="50px" />
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="right-content">
+          <h2 align="center">Make a Circular</h2>
+          <form id="messageForm" method="post" action="{% url 'circular' %}">
+            {% csrf_token %}
+            <div class="input-box">
+              <label for="subject">Subject:</label><br>
+              <input type="text" id="subject" name="subject">
+            </div>
+            <div class="input-box">
+              <label for="message">Message:</label><br>
+              <textarea id="message" name="message" rows="5"></textarea>
+            </div>
+            <button type="submit">Publish</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Student Dashboard | GITAM</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Include Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        /* Custom Styles for Navbar */
+        .custom-navbar {
+            background-color: #1d6eb5; /* Updated background color */
+        }
+
+        .custom-navbar .navbar-brand,
+        .custom-navbar .navbar-nav .nav-link {
+            color: #fff; /* Text color */
+        }
+
+        /* Custom Styles for Buttons */
+        .btn-custom {
+            display: inline-block;
+            width: 50%;
+            height: 43px;
+            background-color: #151111;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.1rem;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #ff6b58; /* Hover background color */
+        }
+
+        /* Custom Styles for Container */
+        .custom-container {
+            margin-top: 20px;
+        }
+
+        .custom-container h4 {
+            color: #0a4275; /* Heading color */
+            font-size: 24px; /* Font size */
+            margin-bottom: 20px;
+        }
+
+        .custom-container p {
+            color: #555; /* Paragraph text color */
+            font-size: 18px; /* Font size */
+            margin-bottom: 10px;
+        }
+
+        /* Custom Styles for Chat Icon */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff4500; /* Orange-Red background color */
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px 0px #000000;
+            transform: rotate(0deg);
+        }
+
+        .chat-icon a {
+            font-size: 36px; /* Adjust the font size for the robot emoji */
+        }
+
+        /* Custom Styles for Animation */
+        .listening-animation {
+            animation: pulse 1s infinite;
+        }
+
+        .recognizing-animation {
+            animation: spin 0s infinite linear;
+        }
+        .chat-icon:hover {
+            animation: none; /* Disable animation on hover */
+        }
+
+        .chat-icon.active {
+            animation: spin 1s infinite linear; /* Apply animation when active */
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .sticky-notes {
+            position: fixed;
+            top: 30%;
+            right: 50px;
+            transform: translateY(-50%);
+            padding: 10px;
+            background-color: #89CFF0; /* Changed to blue */
+            color: black; /* Text color */
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 10 10 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-notes textarea {
+            width: 400px;
+            height: 200px;
+            border: none;
+            resize: none;
+            background-color: #89CFF0; /* Changed to blue */
+            color: black; /* Text color */
+        }
+
+        .sticky-notes button {
+            background-color: #fff;
+            color: #89CFF0; /* Changed to blue */
+            border: 1px solid blue; /* Changed to blue */
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Custom Styles for Roadmap */
+        .roadmap-container {
+            margin-top: 100px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .roadmap .row {
+            justify-content: space-around;
+        }
+
+        .roadmap .stage {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .roadmap .stage span {
+            font-size: 30px;
+        }
+
+        /* Arrow design */
+        .roadmap .stage::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 50px; /* Length of the arrow */
+            height: 2px; /* Thickness of the line */
+            background-color: #000; /* Color of the line */
+            transform: translateY(-50%);
+        }
+
+        /* Arrowhead design */
+        .roadmap .stage::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 50px); /* Adjust based on the length of the line */
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent; /* Adjust the size of the arrowhead */
+            border-bottom: 10px solid transparent; /* Adjust the size of the arrowhead */
+            border-left: 10px solid #000; /* Color of the arrowhead */
+            transform: translateY(-50%);
+        }
+
+        /* Remove arrow from the last stage */
+        .roadmap .stage:last-child::after {
+            display: none;
+        }
+
+        .sidebar {
+        position: fixed;
+        top: 0;
+        right: -250px;
+        height: 100%;
+        width: 250px;
+        background-color: rgba(213, 224, 230, 0.8); /* Updated sidebar background color with transparency */
+        transition: 0.5s;
+        z-index: 1000;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.1); /* Add box shadow for a professional look */
+        overflow-y: auto; /* Add scroll bar when content exceeds height */
+        padding-top: 50px;
+        color: #000; /* Black color font */
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar ul li {
+        padding: 10px;
+        color: #000; /* Black color font */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border bottom for separation */
+    }
+
+    .sidebar ul li:last-child {
+        border-bottom: none; /* Remove border bottom for last item */
+    }
+
+    .sidebar ul li a {
+        text-decoration: none; /* Remove underline from sidebar links */
+    }
+
+    /* Sidebar Toggle Button */
+    .sidebar-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    .sidebar-toggle span {
+        display: block;
+        width: 30px;
+        height: 3px;
+        background-color: #333; /* Toggle button color */
+        margin-bottom: 5px;
+        transition: 0.3s; /* Add smooth transition */
+    }
+
+    .sidebar-toggle:hover span {
+        background-color: #ff6b58; /* Toggle button hover color */
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.5em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+    }
+
+    .badge-danger {
+        color: #fff;
+        background-color: #dc3545;
+    }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navbar with Custom Color -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">Student Dashboard</a>
+            <!-- Activity Button with Dropdown -->
+            <div class="ml-auto">
+                <div class="btn-group">
+<!--                    <button type="button" class="btn btn-custom dropdown-toggle" data-toggle="dropdown">-->
+<!--                        Activity&nbsp;&nbsp;<span id="notificationNumber" class="badge badge-danger">0</span>-->
+<!--                    </button>-->
+
+<!--                    <div class="dropdown-menu dropdown-menu-right">-->
+<!--                        &lt;!&ndash; Link to "Upload Files" page &ndash;&gt;-->
+<!--                        <a class="dropdown-item" href="{% url 'student_files' %}">Upload Files</a>-->
+<!--                        <a class="dropdown-item" href="https://wa.me/{{ faculty_phone }}">Chat</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'student_marks_view' %}">Check Marks</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'resource_center' %}">Resource Center</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'internship_opportunities' %}">Internship Opportunities</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'student_private_files' email=email %}">Private Files</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'resume_builder'  %}">Resume Builder</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'display_circulars'  %}">Circulars</a>-->
+
+<!--                    </div>-->
+                </div>
+
+                <button class="btn btn-danger"><a href="{% url 'Student_Login' %}" style="color: white;">Log Out</a></button>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Container -->
+    <div class="container custom-container">
+<!--        <h4>Welcome {{ email }} 👋</h4>-->
+        <h4 style="color:#f03535">Welcome back, {{ student_name }} 👋</h4>
+        <!-- Separate box for Faculty Information -->
+        <div class="info-box">
+            <h4>Faculty Information:</h4>
+            <p>Faculty Name: <b>{{ faculty_name }}</b></p>
+            <p>Faculty Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ mapping.faculty_email }}"
+                    target="_blank">{{ faculty_email }}</a></p>
+            <p>Contact: <b>{{ faculty_phone }}</b></p>
+        </div>
+        <!-- Add your dashboard content here -->
+    </div>
+
+    <!-- Sticky Notes -->
+    <div class="sticky-notes">
+        <textarea id="stickyNote" placeholder="Hello! I'm a sticky note!" style="color: black;"></textarea>
+    </div>
+
+    <!-- Chat Icon -->
+    <button class="chat-icon" id="chatIcon">
+        <!-- Add your chat icon content (e.g., FontAwesome icon) -->
+        <a href="http://127.0.0.1:8000/voicechat">🤖</a>
+    </button>
+
+    <!-- Roadmap Container -->
+    <div class="container roadmap-container">
+        <!-- Roadmap -->
+        <div class="roadmap">
+            <h4>&nbsp;&nbsp;&nbsp;Internship Roadmap</h4>
+            <div class="row">
+                <div class="col-sm-3 stage">
+                    <span>🧑🏻‍💻</span>
+                    <p><a href="{% url 'internship_opportunities' %}">Apply Internship</a></p>
+                </div>
+                <div class="col-sm-3 stage">
+                    <span>📝</span>
+                    <p><a href="{% url 'student_private_files' email=email %}">Documents</a></p>
+                </div>
+                <div class="col-sm-3 stage">
+                    <span>⌛</span>
+                    <p><a href="{% url 'student_files' %}">Progress</a></p>
+                </div>
+                <div class="col-sm-3 stage">
+                    <span>✏️</span>
+                    <p><a href="{% url 'student_marks_view' %}">Review</a></p>
+                </div>
+            </div>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+    <ul style="color: #000;">
+        <!-- Activity Dropdown Content -->
+        <li><a href="{% url 'student_files' %}" style="color: #000;">Upload Files</a></li>
+        <li><a href="https://wa.me/{{ faculty_phone }}" style="color: #000;">Chat</a></li>
+        <li><a href="{% url 'student_marks_view' %}" style="color: #000;">Check Marks</a></li>
+        <li><a href="{% url 'resource_center' %}" style="color: #000;">Resource Center</a></li>
+        <li><a href="{% url 'internship_opportunities' %}" style="color: #000;">Internship Opportunities</a></li>
+        <li><a href="{% url 'student_private_files' email=email %}" style="color: #000;">Private Files</a></li>
+        <li><a href="{% url 'resume_builder'  %}" style="color: #000;">Resume Builder</a></li>
+        <li id="circularsItem"><a href="{% url 'display_circulars'  %}" style="color: #000;">Circulars&nbsp;&nbsp;</a></li>
+        <li><a href="{% url 'student_performance'  %}" style="color: #000;">Performance Graph</a></li>
+
+    </ul>
+</div>
+
+
+    <!-- Sidebar Toggle Button -->
+    <div class="sidebar-toggle" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Your Custom JavaScript -->
+    <script>
+
+
+        // Add animations to roadmap stages
+        document.querySelectorAll('.stage').forEach(function(stage, index) {
+            stage.style.animationDelay = (index * 0.5) + 's';
+            stage.classList.add('animate__animated', 'animate__fadeInLeft');
+        });
+        function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        if (sidebar.style.right === "-250px") {
+            sidebar.style.right = "0";
+        } else {
+            sidebar.style.right = "-250px";
+        }
+    }
+
+    // Function to show sidebar when hovering over the icon
+    function showSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        sidebar.style.right = "0";
+    }
+
+    // Function to hide sidebar when mouse leaves the icon area
+    function hideSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        sidebar.style.right = "-250px";
+    }
+        // Add animations to sidebar
+        document.addEventListener("DOMContentLoaded", function () {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.add('animate__animated', 'animate__slideInRight');
+        });
+        function createNotificationBadge() {
+        // Create a span element for the badge
+        var badge = document.createElement('span');
+        badge.classList.add('badge', 'badge-danger');
+        badge.innerText = '1'; // Change the number as needed
+
+        // Append the badge to the "Circulars" list item
+        var circularsItem = document.getElementById('circularsItem');
+        circularsItem.appendChild(badge);
+    }
+
+    // Call the function to create the notification badge
+    createNotificationBadge();
+        function toggleChatAnimation() {
+            var chatIcon = document.getElementById('chatIcon');
+            chatIcon.classList.toggle('active');
+        }
+
+        // Add event listener to toggle animation on click
+        document.getElementById('chatIcon').addEventListener('click', toggleChatAnimation);
+    </script>
+</body>
+
+</html>

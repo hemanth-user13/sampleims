@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>HOD Marks View</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #e77e3c;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #e77e3c;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        tbody tr {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>HOD Marks View</h2>
+
+    <div class="search-container">
+        <label for="rollNumber">Search by Roll Number: </label>
+        <input type="text" id="rollNumber" placeholder="Enter Roll Number">
+        <button onclick="searchByRollNumber()">Search</button>
+    </div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Weak 1</th>
+                <th>Weak 2</th>
+                <th>Weak 3</th>
+                <th>Weak 4</th>
+                <th>Weak 5</th>
+                <th>Weak 6</th>
+                <th>Weak 7</th>
+                <th>Weak 8</th>
+                <th>Average Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Replace the loop below with your actual Django template loop -->
+            {% for file in uploaded_files %}
+                <tr>
+                    <td>{{ file.roll_number }}</td>
+                    <td>{{ file.marks1 }}</td>
+                    <td>{{ file.marks2 }}</td>
+                    <td>{{ file.marks3 }}</td>
+                    <td>{{ file.marks4 }}</td>
+                    <td>{{ file.marks5 }}</td>
+                    <td>{{ file.marks6 }}</td>
+                    <td>{{ file.marks7 }}</td>
+                    <td>{{ file.marks8 }}</td>
+                    <td>{{ file.average_marks }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function searchByRollNumber() {
+            var input, filter, table, tbody, tr, td, i, txtValue;
+            input = document.getElementById("rollNumber");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tbody = table.querySelector("tbody");
+            tr = tbody.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

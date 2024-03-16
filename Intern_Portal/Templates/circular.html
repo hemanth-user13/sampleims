@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Forward a Message</title>
+    <style>
+        /* Dynamic CSS */
+        :root {
+            --primary-color: #000; /* Black */
+            --lighter-primary-color: #333; /* Darker Black */
+            --red-color: #ff0000; /* Red */
+            --background-color: #f9f9f9;
+            --font-color: #000;
+            --edit-mode-background: #ffebcc; /* Light Orange */
+        }
+
+        body {
+            background-color: var(--background-color);
+            font-family: Arial, sans-serif;
+            color: var(--font-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0; /* Corrected margin value */
+        }
+
+        .content {
+    background-color: #fff; /* White background for the content */
+    padding: 60px 100px 100px 70px; /* Added padding for spacing, increased on the right side */
+    border: 0px solid var(--primary-color); /* Box around the content */
+    border-radius: 10px; /* Rounded corners */
+}
+
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        label {
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        textarea {
+            border: 1px solid var(--primary-color);
+            padding: 20px; /* Reduced padding for input fields */
+            margin: 10px 0;
+            width: 200%; /* Adjusted width */
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--lighter-primary-color);
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: var(--red-color); /* Red */
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: block;
+            margin: 10 auto; /* Center align the button */
+            text-decoration: none;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ff3333; /* Lighter Red */
+        }
+
+        textarea {
+            resize: none;
+            height: 200px;
+        }
+
+        .edit-mode textarea {
+            border-color: var(--lighter-primary-color);
+            background-color: var(--edit-mode-background); /* Light Orange */
+        }
+    </style>
+</head>
+<body>
+    <div class="content"> <!-- Added container div -->
+        <h2>Make a Circular</h2>
+        <form id="messageForm" method="post">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="subject">Subject:</label><br>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="input-box">
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message"></textarea>
+            </div>
+            <button type="submit">Publish</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript to toggle edit mode
+        const messageTextarea = document.getElementById('message');
+        messageTextarea.addEventListener('focus', () => {
+            messageTextarea.classList.add('edit-mode');
+        });
+        messageTextarea.addEventListener('blur', () => {
+            messageTextarea.classList.remove('edit-mode');
+        });
+    </script>
+</body>
+</html>

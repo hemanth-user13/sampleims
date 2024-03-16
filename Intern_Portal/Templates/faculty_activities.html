@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Faculty Activities</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #ffe0d2;
+            color: black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ffe0d2;
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Additional CSS for the text boxes */
+        .marks-input {
+            width: 50px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center; /* Center-align text within input */
+        }
+
+        .average-input {
+            width: 100px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            font-weight: bold;
+            text-align: center; /* Center-align text within input */
+        }
+
+        /* Styling for links */
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Styling for the legend */
+        legend {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Styling for the "No files uploaded" message */
+        .empty-message {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+
+        /* Styling for the "Marks" section */
+        .marks-section {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the "Update Marks" button when disabled */
+        input[type="submit"].disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Dynamic styling for the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px; /* Added margin to separate table from content */
+            opacity: 0; /* Start with 0 opacity (hidden) */
+            animation: fade-in 1s forwards; /* Apply fade-in animation */
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        td {
+            padding: 10px;
+            text-align: center; /* Center-align text within cells */
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);
+            padding: 10px;
+            text-align: center; /* Center-align text within cells */
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Styling for table headers */
+        th.weeks-header {
+            font-weight: bold;
+        }
+
+        /* Styling for table cells with marks */
+        td.marks-cell {
+            background-color: #f9f9f9;
+        }
+
+        .sign-btn {
+            display: inline-block;
+            width: 50%;
+            height: 50px;
+            background-color: #151111;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+            text-align: center;
+            line-height: 43px;
+        }
+
+        .sign-btn:hover {
+            background-color: #8371fd;
+        }
+
+        .center-text {
+            text-align: center;
+            /* Vertically center-align at 50% of viewport height */
+            transform: translateY(-50%); /* Correct vertical alignment */
+        }
+        /* CSS for File Details Section */
+.file-details {
+    border: 2px solid #ff8c6b;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.file-details legend {
+    font-weight: bold;
+    color: #ff8c6b;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.file-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.file-item {
+    flex-basis: calc(25% - 10px); /* Adjust the width as needed to fit 4 items in a row */
+    margin: 5px;
+    text-align: center; /* Center-align the text within each item */
+}
+
+.file-item strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.file-link {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+.file-link:hover {
+    color: #0056b3;
+}
+
+.update-marks-btn {
+            display: block;
+            margin: 0 auto; /* Center-align horizontally */
+            width: 200px; /* Set the desired width */
+            height: 50px;
+            background-color: #151111;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+            text-align: center;
+            line-height: 43px;
+        }
+
+        .update-marks-btn:hover {
+            background-color: #8371fd;
+        }
+    </style>
+</head>
+<body>
+<h1>FACULTY ACTIVITIES</h1>
+
+<ul>
+    {% for file in files %}
+    <li>
+<fieldset class="file-details">
+    <legend style="text-align: center;">Roll Number: {{ file.roll_number }}</legend>
+
+    <div class="file-info">
+        <div class="file-item">
+            <strong>Weekly Report:</strong>
+            <a href="{{ file.weekly_report.url }}" target="_blank" class="file-link">View</a>
+        </div>
+        {% if file.certificate %}
+        <div class="file-item">
+            <strong>Certificate:</strong>
+            <a href="{{ file.certificate.url }}" target="_blank" class="file-link">View</a>
+        </div>
+        {% endif %}
+        {% if file.ppt %}
+        <div class="file-item">
+            <strong>PPT:</strong>
+            <a href="{{ file.ppt.url }}" target="_blank" class="file-link">View</a>
+        </div>
+        {% endif %}
+        {% if file.final_project_report %}
+        <div class="file-item">
+            <strong>Final Project Report:</strong>
+            <a href="{{ file.final_project_report.url }}" target="_blank" class="file-link">View</a>
+        </div>
+        {% endif %}
+    </div>
+</fieldset>
+                <div>
+            <a href="#" onclick="history.back();">
+                <img src="https://www.freeiconspng.com/thumbs/return-button-png/return-button-png-31.png" alt="Back" style="width: 60px; height: 60px;">
+            </a>
+        </div>
+
+        <div class="marks-section">
+            <form method="post" action="{% url 'update_marks' file.id %}">
+                {% csrf_token %}
+                {% if not file.duplicate %}
+                <table>
+                    <tr>
+                        <th class="weeks-header">Weeks</th>
+                        <th class="weeks-header">Marks</th>
+                    </tr>
+                    <tr>
+                        <td>Week 1</td>
+                        <td class="marks-cell"><input type="number" name="marks1" class="marks-input" value="{{ file.marks1 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 2</td>
+                        <td class="marks-cell"><input type="number" name="marks2" class="marks-input" value="{{ file.marks2 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 3</td>
+                        <td class="marks-cell"><input type="number" name="marks3" class="marks-input" value="{{ file.marks3 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 4</td>
+                        <td class="marks-cell"><input type="number" name="marks4" class="marks-input" value="{{ file.marks4 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 5</td>
+                        <td class="marks-cell"><input type="number" name="marks5" class="marks-input" value="{{ file.marks5 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 6</td>
+                        <td class="marks-cell"><input type="number" name="marks6" class="marks-input" value="{{ file.marks6 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 7</td>
+                        <td class="marks-cell"><input type="number" name="marks7" class="marks-input" value="{{ file.marks7 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Week 8</td>
+                        <td class="marks-cell"><input type="number" name="marks8" class="marks-input" value="{{ file.marks8 }}"></td>
+                    </tr>
+                </table>
+                {% endif %}
+                <input type="submit" value="Update Marks" class="{% if file.marks_updated %}disabled{% endif %} update-marks-btn">
+            </form>
+            <div class="center-text">
+                <strong>Average Marks:</strong>
+                <input type="number" name="average" class="average-input" readonly>
+            </div>
+
+        </div>
+    </li>
+    {% empty %}
+    <p class="empty-message">No files uploaded by this student.</p>
+    {% endfor %}
+</ul>
+
+<!-- Add JavaScript to calculate the average of marks -->
+<script>
+    var marksInputs = document.querySelectorAll('.marks-input');
+    var averageInput = document.querySelector('.average-input');
+
+    marksInputs.forEach(function(input) {
+        input.addEventListener('input', calculateAverage);
+    });
+
+    function calculateAverage() {
+        var totalMarks = 0;
+        marksInputs.forEach(function(input) {
+            totalMarks += parseInt(input.value || 0);
+        });
+        var average = totalMarks / marksInputs.length;
+        averageInput.value = average.toFixed(2);
+    }
+
+    // Initially calculate the average when the page loads
+    calculateAverage();
+</script>
+
+</body>
+</html>

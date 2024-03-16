@@ -1,0 +1,128 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resource Center</title>
+
+        <!-- Include Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <style>
+            /* Your custom CSS styles for the tree structure */
+            .tree-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .tree {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .tree li {
+                margin: 0;
+                padding: 10px 5px;
+                position: relative;
+            }
+
+            .tree li::before,
+            .tree li::after {
+                content: '';
+                left: -20px;
+                position: absolute;
+                right: auto;
+            }
+
+            .tree li::before {
+                border-left: 1px solid #000;
+                bottom: 50px;
+                height: 100%;
+                top: 0;
+            }
+
+            .tree li::after {
+                border-top: 1px solid #000;
+                height: 20px;
+                top: 25px;
+                width: 20px;
+            }
+
+            .tree li span {
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border: 1px solid #000;
+                border-radius: 5px;
+                display: inline-block;
+                padding: 3px 8px;
+                text-decoration: none;
+                cursor: pointer; /* Add cursor style to indicate clickable */
+            }
+
+            .tree li span:hover {
+                background-color: #ddd; /* Add hover effect */
+            }
+
+            .document-list {
+                padding-left: 40px; /* Adjust the padding for better alignment */
+            }
+
+            /* Rotate the arrow */
+            .arrow {
+                transform: rotate(45deg);
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            /* Different background colors for each domain */
+            .domain-color-1 {
+                background-color: #ffcccb;
+            }
+
+            .domain-color-2 {
+                background-color: #cbf0f8;
+            }
+
+            .domain-color-3 {
+                background-color: #d0f4ea;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="tree-container">
+            <!-- Your tree structure based on documents and domains -->
+            <ul class="tree">
+                <li>
+                    <span class="arrow">&#10148;</span>
+                    <span>Resource Center</span>
+                    <ul class="document-list">
+                        {% for domain, documents in organized_documents.items %}
+                            <li class="domain-color-{{ loop.index }}">
+                                <span class="arrow">&#10148;</span>
+                                <span>{{ domain }}</span>
+                                <ul>
+                                    {% for document in documents %}
+                                        <li>
+                                            <a href="{{ document.file.url }}" download="{{ document.file.name }}">{{ document.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Include Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
+    </html>

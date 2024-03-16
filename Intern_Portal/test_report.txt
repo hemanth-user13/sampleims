@@ -1,0 +1,38 @@
+test_main_dashboard (__main__.TestMainDashboard.test_main_dashboard) ... ok
+test_student_login (__main__.TestStudentLogin.test_student_login) ... ok
+test_student_dashboard (__main__.TestStudentDashboard.test_student_dashboard) ... ok
+test_display_circulars (__main__.TestDisplayCirculars.test_display_circulars) ... ok
+test_student_register (__main__.TestStudentRegister.test_student_register) ... ok
+test_faculty_login (__main__.TestFacultyLogin.test_faculty_login) ... ok
+test_faculty_dashboard (__main__.TestFacultyDashboard.test_faculty_dashboard) ... ok
+test_hod_login (__main__.TestHODLogin.test_hod_login) ... ok
+test_hod_dashboard (__main__.TestHODDashboard.test_hod_dashboard) ... ok
+test_generate_mapping_excel (__main__.TestGenerateMappingExcel.test_generate_mapping_excel) ... ok
+test_download_mapped_excel (__main__.TestDownloadMappedExcel.test_download_mapped_excel) ... ok
+test_mapping_list (__main__.TestMappingList.test_mapping_list) ... ok
+test_student_files (__main__.TestStudentFiles.test_student_files) ... ok
+test_download_file (__main__.TestDownloadFile.test_download_file) ... ok
+test_faculty_files_view (__main__.TestFacultyFilesView.test_faculty_files_view) ... ok
+test_faculty_activities (__main__.TestFacultyActivities.test_faculty_activities) ... ok
+test_hod_activities (__main__.TestHODActivities.test_hod_activities) ... ok
+test_update_marks (__main__.TestUpdateMarks.test_update_marks) ... ok
+test_student_marks_view (__main__.TestStudentMarksView.test_student_marks_view) ... ok
+test_download_student_marks_excel (__main__.TestDownloadStudentMarksExcel.test_download_student_marks_excel) ... ok
+test_get_chatbot_response (__main__.TestGetChatbotResponse.test_get_chatbot_response) ... ok
+test_chatbot (__main__.TestChatbot.test_chatbot) ... ok
+test_hod_marks_view (__main__.TestHODMarksView.test_hod_marks_view) ... ok
+test_student_private_files (__main__.TestStudentPrivateFiles.test_student_private_files) ... ok
+test_download_file_private (__main__.TestDownloadFilePrivate.test_download_file_private) ... ok
+test_upload_file (__main__.TestUploadFile.test_upload_file) ... ok
+test_admin_dashboard (__main__.TestAdminDashboard.test_admin_dashboard) ... ok
+test_internship_opportunities (__main__.TestInternshipOpportunities.test_internship_opportunities) ... ok
+test_resume_builder (__main__.TestResumeBuilder.test_resume_builder) ... ok
+test_speech_recognition_and_execution (__main__.TestSpeechRecognitionAndExecution.test_speech_recognition_and_execution) ... ok
+test_resource_center (__main__.TestResourceCenter.test_resource_center) ... ok
+test_circular (__main__.TestCircular.test_circular) ... ok
+test_student_performance (__main__.TestStudentPerformance.test_student_performance) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.008s
+
+OK

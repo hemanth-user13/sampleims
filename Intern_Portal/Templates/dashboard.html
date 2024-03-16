@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Circular</title>
+    <style>
+        /* Dynamic styling */
+        :root {
+            --primary-color: #007bff; /* Blue */
+            --secondary-color: #6c757d; /* Gray */
+            --text-color: #333; /* Dark gray */
+            --font-size-h1: 2rem;
+            --font-size-h2: 1.5rem;
+            --font-size-li: 1rem;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa; /* Light gray */
+        }
+
+        .message-box {
+            background-color: #fff; /* White */
+            border: 1px solid var(--primary-color);
+            border-radius: 10px; /* Increase border-radius for rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Increase padding for more space inside the box */
+            max-width: 600px; /* Increase max-width for wider box */
+            width: 100%;
+            animation: fadeIn 0.5s ease-out; /* Fade in animation */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: var(--font-size-h1); /* Dynamic font size */
+            color: var(--primary-color);
+            margin-bottom: 30px; /* Increase margin for more space between heading and content */
+            text-align: center; /* Center align the heading */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: var(--font-size-li); /* Dynamic font size */
+            margin-bottom: 30px; /* Increase margin for more space between list items */
+            animation: slideIn 0.5s ease; /* Slide in animation */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        small {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="message-box">
+    <h2 style="color:#d98911;">Student Circulars</h2>
+    <ul>
+        {% for circular in all_circulars %}
+            <li>
+                <h3><strong>{{ circular.subject }}</strong></h3>
+                <p>{{ circular.message }}</p>
+                <small>{{ circular.created_at }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Your other dashboard content here -->
+
+<script>
+    // JavaScript for dynamic font size based on viewport width
+    window.addEventListener('resize', function () {
+        const viewportWidth = window.innerWidth;
+        const baseFontSize = 16; // Base font size in pixels
+        const baseViewportWidth = 1366; // Base viewport width in pixels
+        const scaleFactor = viewportWidth / baseViewportWidth;
+        const fontSizeH1 = scaleFactor * baseFontSize * 2; // Scaling factor for H1 font size
+        const fontSizeLi = scaleFactor * baseFontSize; // Scaling factor for LI font size
+
+        document.documentElement.style.setProperty('--font-size-h1', fontSizeH1 + 'px');
+        document.documentElement.style.setProperty('--font-size-li', fontSizeLi + 'px');
+    });
+</script>
+
+</body>
+</html>

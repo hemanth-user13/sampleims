@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="https://1.bp.blogspot.com/-ixBoEHnCj5Y/TY1v7H2NL2I/AAAAAAAACmA/0twWkbEYiOs/s1600/gitam.JPG">
+    <title>Student Marks</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff8c6b, #ffa07a, #ffb48a);            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #ffe0d2; /* Change background color to orange */
+            color: black;
+            padding: 20px;
+            margin: 0;
+            border-radius: 10px 10px 0 0;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        /* Dynamic styling */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        td.average {
+            font-weight: bold;
+            color: #ff6600; /* Change text color to orange */
+            animation: fade-in 1s ease-out;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #ff6600; /* Change button background color to orange */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ff5500; /* Darker shade of orange on hover */
+        }
+
+        /* Input styling */
+        input[type="text"] {
+            padding: 12px;
+            width: 50%;
+            border: 1px solid #ff6600; /* Change border color to orange */
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff5500; /* Darker shade of orange on focus */
+        }
+
+        /* Animation */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .sign-btn {
+  display: inline-block;
+  width: 10%;
+  height: 43px;
+  background-color: #151111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  transition: 0.3s;
+}
+
+.sign-btn:hover {
+  background-color: #8371fd;
+}
+
+
+        /* Add animation to table rows */
+        @keyframes table-row-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        tbody tr {
+            animation: table-row-fade-in 0.5s ease-out;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Internship Marks</h1>
+
+        <form method="post" action="{% url 'student_marks_view' %}">
+            {% csrf_token %}
+            <label for="roll_number">Enter Roll Number:</label>
+            <input type="text" id="roll_number" name="roll_number">
+            <button type="submit" class="sign-btn">Submit</button>
+                    <div>
+            <a href="#" onclick="history.back();">
+                <img src="https://www.freeiconspng.com/thumbs/return-button-png/return-button-png-31.png" alt="Back" style="width: 80px; height: 80px;">
+            </a>
+        </div>
+        </form>
+        {% if marks %}
+        <p style="color:red;" align="center">Roll Number: {{ roll_number }}</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Week-1</th>
+                    <th>Week-2</th>
+                    <th>Week-3</th>
+                    <th>Week-4</th>
+                    <th>Week-5</th>
+                    <th>Week-6</th>
+                    <th>Week-7</th>
+                    <th>Week-8</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mark in marks %}
+                    <tr>
+                        <td>{{ mark.marks1 }}</td>
+                        <td>{{ mark.marks2 }}</td>
+                        <td>{{ mark.marks3 }}</td>
+                        <td>{{ mark.marks4 }}</td>
+                        <td>{{ mark.marks5 }}</td>
+                        <td>{{ mark.marks6 }}</td>
+                        <td>{{ mark.marks7 }}</td>
+                        <td>{{ mark.marks8 }}</td>
+                        <td class="average">{{ mark.average_marks|default:"N/A" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No marks available</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
